@@ -35,13 +35,13 @@ namespace Ecomm
 
             services.AddSingleton<IConnectionProvider>(new ConnectionProvider("amqp://guest:guest@localhost:5672"));
             services.AddSingleton<IPublisher>(x => new Publisher(x.GetService<IConnectionProvider>(),
-                    "report_exchange",
+                    "inventory_exchange",
                     ExchangeType.Topic));
-            //services.AddSingleton<ISubscriber>(x => new Subscriber(x.GetService<IConnectionProvider>(),
-            //    "order_exchange",
-            //    "order_response",
-            //    "order.created",
-            //    ExchangeType.Topic));
+            services.AddSingleton<ISubscriber>(x => new Subscriber(x.GetService<IConnectionProvider>(),
+                "order_exchange",
+                "order_response",
+                "order.created",
+                ExchangeType.Topic));
 
             services.AddHostedService<OrderCreatedListener>();
 

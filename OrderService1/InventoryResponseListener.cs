@@ -10,20 +10,20 @@ namespace OrderService
 {
     public class InventoryResponseListener : IHostedService
     {
-        //private readonly ISubscriber subscriber;
+        private readonly ISubscriber subscriber;
         private readonly IOrderDeletor orderDeletor;
 
         public InventoryResponseListener(
-            //ISubscriber subscriber,
+            ISubscriber subscriber,
             IOrderDeletor orderDeletor)
         {
-            //this.subscriber = subscriber;
+            this.subscriber = subscriber;
             this.orderDeletor = orderDeletor;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //subscriber.Subscribe(Subscribe);
+            subscriber.Subscribe(Subscribe);
             return Task.CompletedTask;
         }
 
@@ -34,7 +34,7 @@ namespace OrderService
             {
                 orderDeletor.Delete(response.OrderId).GetAwaiter().GetResult();
             }
-            return true;
+            return true; 
         } 
 
         public Task StopAsync(CancellationToken cancellationToken)

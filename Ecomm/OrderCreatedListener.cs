@@ -14,22 +14,21 @@ namespace Ecomm
     public class OrderCreatedListener : IHostedService
     {
         private readonly IPublisher publisher;
-        //private readonly ISubscriber subscriber;
+        private readonly ISubscriber subscriber;
         private readonly IInventoryUpdator inventoryUpdator;
 
         public OrderCreatedListener(IPublisher publisher
-            
-            //,ISubscriber subscriber
+            , ISubscriber subscriber
             , IInventoryUpdator inventoryUpdator)
         {
             this.publisher = publisher;
-            //this.subscriber = subscriber;
+            this.subscriber = subscriber;
             this.inventoryUpdator = inventoryUpdator;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //subscriber.Subscribe(Subscribe);
+            subscriber.Subscribe(Subscribe);
             return Task.CompletedTask;
         }
 
@@ -58,8 +57,4 @@ namespace Ecomm
             return Task.CompletedTask;
         }
     }
-
-    
-
-    
 }

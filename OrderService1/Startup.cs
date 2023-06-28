@@ -37,13 +37,13 @@ namespace OrderService
 
             services.AddSingleton<IConnectionProvider>(new ConnectionProvider("amqp://guest:guest@localhost:5672"));
             services.AddSingleton<IPublisher>(x => new Publisher(x.GetService<IConnectionProvider>(),
-                    "report_exchange",
+                    "order_exchange",
                     ExchangeType.Topic));
-            //services.AddSingleton<ISubscriber>(x => new Subscriber(x.GetService<IConnectionProvider>(),
-            //    "inventory_exchange",
-            //    "inventory_response",
-            //    "inventory.response",
-            //    ExchangeType.Topic));
+            services.AddSingleton<ISubscriber>(x => new Subscriber(x.GetService<IConnectionProvider>(),
+                "inventory_exchange",
+                "inventory_response",
+                "inventory.response",
+                ExchangeType.Topic));
 
             services.AddHostedService<InventoryResponseListener>();
         }

@@ -40,16 +40,16 @@ namespace OrderService.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] OrderDetail orderDetail)
+        public async void Post([FromBody] OrderDetail orderDetail)
         {
-            //var id = await orderCreator.Create(orderDetail);
-            //publisher.Publish(JsonConvert.SerializeObject(new OrderRequest { 
-            //    //OrderId = id,
-            //    ProductId = orderDetail.ProductId,
-            //    Quantity = orderDetail.Quantity
-            //}), "report.order", null);
+            var id =  await orderCreator.Create(orderDetail);
+            publisher.Publish(JsonConvert.SerializeObject(new OrderRequest
+            {
+                OrderId = id,
+                ProductId = orderDetail.ProductId,
+                Quantity = orderDetail.Quantity
+            }), "order.created", null);
 
-            publisher.Publish(JsonConvert.SerializeObject(orderDetail), "report.order", null);
 
         }
 
